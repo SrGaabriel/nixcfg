@@ -19,6 +19,7 @@
     uv
     gh
     nil
+    spotifywm
     nixd
     zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];

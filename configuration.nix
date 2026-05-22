@@ -8,14 +8,45 @@
     "nix-command"
     "flakes"
   ];
+  system.nixos.tags = [ "shit" ];
 
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    device = "nodev";
+    theme = pkgs.catppuccin-grub;
+    configurationLimit = 5;
+    useOSProber = true;
+  };
+  boot.loader.timeout = 3;
+
+  boot.plymouth = {
+    enable = true;
+    theme = "catppuccin-macchiato";
+    themePackages = [ pkgs.catppuccin-plymouth ];
+  };
+
+  boot.initrd.kernelModules = [ "amdgpu" ];
+
+  boot.initrd.systemd.enable = true;
+  boot.consoleLogLevel = 0;
+  boot.initrd.verbose = false;
+  boot.kernelParams = [
+    "quiet"
+    "splash"
+    "rd.systemd.show_status=false"
+    "rd.udev.log_level=3"
+    "udev.log_priority=3"
+  ];
 
   networking.hostName = "nixos";
-  networking.wireless.enable = true;
 
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.powersave = false;
+  networking.networkmanager.dns = "none";
+
   networking.nameservers = [
     "1.1.1.1"
     "8.8.8.8"
@@ -60,10 +91,15 @@
     ghostty
     git
     jujutsu
+    (sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
   ];
   environment.shells = with pkgs; [ nushell ];
 
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
+  programs.nix-ld.enable = true;
 
   programs.mtr.enable = true;
   programs.gnupg.agent = {
@@ -72,6 +108,21 @@
   };
 
   services.openssh.enable = true;
+
+  services.displayManager.sddm = {
+    enable = true;
+    package = pkgs.kdePackages.sddm;
+    wayland.enable = true;
+    theme = "sddm-astronaut-theme";
+    extraPackages = with pkgs; [
+      kdePackages.qtsvg
+      kdePackages.qtmultimedia
+      kdePackages.qtvirtualkeyboard
+    ];
+  };
+
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
 
   system.stateVersion = "25.11";
   nixpkgs.config.allowUnfree = true;
