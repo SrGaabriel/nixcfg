@@ -20,7 +20,7 @@
     configurationLimit = 5;
     useOSProber = true;
   };
-  boot.loader.timeout = 3;
+  boot.loader.timeout = null;
 
   boot.plymouth = {
     enable = true;
@@ -39,6 +39,7 @@
     "rd.systemd.show_status=false"
     "rd.udev.log_level=3"
     "udev.log_priority=3"
+    "amdgpu.ppfeaturemask=0xffffffff"
   ];
 
   networking.hostName = "nixos";
@@ -80,6 +81,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "corectrl"
     ];
     shell = pkgs.nushell;
     packages = with pkgs; [ ];
@@ -98,8 +100,13 @@
   programs.hyprland = {
     enable = true;
     withUWSM = true;
+
   };
+
+  programs.niri.enable = true;
   programs.nix-ld.enable = true;
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   programs.mtr.enable = true;
   programs.gnupg.agent = {
@@ -108,6 +115,36 @@
   };
 
   services.openssh.enable = true;
+
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-color-emoji
+      liberation_ttf
+      nerd-fonts.jetbrains-mono
+    ];
+    fontconfig = {
+      antialias = true;
+      hinting = {
+        enable = true;
+        style = "slight";
+      };
+      subpixel = {
+        rgba = "rgb";
+        lcdfilter = "default";
+      };
+    };
+  };
+
+  programs.corectrl.enable = true;
+  services.hardware.openrgb.enable = true;
+  hardware.i2c.enable = true;
+
+  services.accounts-daemon.enable = true;
+  services.power-profiles-daemon.enable = true;
+  services.printing.enable = true;
 
   services.displayManager.sddm = {
     enable = true;
@@ -123,6 +160,7 @@
 
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
+  security.pam.services.hyprlock = { };
 
   system.stateVersion = "25.11";
   nixpkgs.config.allowUnfree = true;

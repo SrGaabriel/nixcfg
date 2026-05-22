@@ -8,18 +8,30 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
+    helium = {
+      url = "github:oxcl/nix-flake-helium-browser";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
-    {
+    inputs@{
       self,
       nixpkgs,
       home-manager,
-      zen-browser,
+      helium,
+      niri,
+      dms,
       ...
     }:
     {
@@ -27,10 +39,12 @@
         system = "x86_64-linux";
         modules = [
           ./configuration.nix
+          niri.nixosModules.niri
           home-manager.nixosModules.home-manager
           {
             home-manager.users.gabriel = import ./home.nix;
-            home-manager.extraSpecialArgs = { inherit zen-browser; };
+            home-manager.extraSpecialArgs = { inherit helium inputs; };
+            home-manager.backupFileExtension = "hm-bak";
           }
         ];
       };
