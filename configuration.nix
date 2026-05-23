@@ -8,7 +8,6 @@
     "nix-command"
     "flakes"
   ];
-  system.nixos.tags = [ "shit" ];
 
   boot.loader.systemd-boot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -17,7 +16,7 @@
     efiSupport = true;
     device = "nodev";
     theme = pkgs.catppuccin-grub;
-    configurationLimit = 5;
+    configurationLimit = 2;
     useOSProber = true;
   };
   boot.loader.timeout = null;
@@ -28,7 +27,7 @@
     themePackages = [ pkgs.catppuccin-plymouth ];
   };
 
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   boot.initrd.systemd.enable = true;
   boot.consoleLogLevel = 0;
@@ -93,6 +92,7 @@
     ghostty
     git
     jujutsu
+    xwayland-satellite # X11 support for niri (Steam etc.)
     (sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
   ];
   environment.shells = with pkgs; [ nushell ];
@@ -100,7 +100,6 @@
   programs.hyprland = {
     enable = true;
     withUWSM = true;
-
   };
 
   programs.niri.enable = true;
@@ -115,6 +114,15 @@
   };
 
   services.openssh.enable = true;
+
+  programs.steam = {
+    enable = true;
+    extraCompatPackages = [ pkgs.proton-ge-bin ];
+    gamescopeSession.enable = true;
+  };
+  programs.gamescope.enable = true;
+  programs.gamemode.enable = true;
+  hardware.graphics.enable32Bit = true;
 
   fonts = {
     enableDefaultPackages = true;
@@ -135,6 +143,20 @@
         rgba = "rgb";
         lcdfilter = "default";
       };
+    };
+  };
+
+  systemd.services.amdgpu-high-clocks = {
+    description = "Force AMD GPU to high performance level";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = pkgs.writeShellScript "amdgpu-high-clocks" ''
+        for f in /sys/class/drm/card*/device/power_dpm_force_performance_level; do
+          [ -e "$f" ] && echo high > "$f"
+        done
+      '';
     };
   };
 

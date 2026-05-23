@@ -22,6 +22,11 @@
       url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprsplit = {
+      url = "github:shezdy/hyprsplit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
