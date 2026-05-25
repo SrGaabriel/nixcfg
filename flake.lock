@@ -59,6 +59,48 @@
         "type": "github"
       }
     },
+    "dsearch": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779380866,
+        "narHash": "sha256-GBQeoW8E0Vdabz4POwXiOg8dtV9/8YDbsp82Bic2QPc=",
+        "owner": "AvengeMedia",
+        "repo": "danksearch",
+        "rev": "db1c8f8c692d0d838393e25f4a2a41404309ff75",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "danksearch",
+        "type": "github"
+      }
+    },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "lotus",
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1779525325,
+        "narHash": "sha256-6lGiEAaxkZbBzWxG+Jb6l5XEyef/CtyQIRIzuqM7ezA=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "4f37db7e99d5af8b22cfe234d780e4332f32703f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -510,6 +552,24 @@
         "type": "github"
       }
     },
+    "lotus": {
+      "inputs": {
+        "fenix": "fenix",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1779569224,
+        "narHash": "sha256-KaOWS9I9nUHua/dkZQB9UUFVs9U66Wej/hknr1u7F6U=",
+        "path": "/home/gabriel/Developer/lotus",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/gabriel/Developer/lotus",
+        "type": "path"
+      }
+    },
     "niri": {
       "inputs": {
         "niri-stable": "niri-stable",
@@ -665,11 +725,30 @@
     "root": {
       "inputs": {
         "dms": "dms",
+        "dsearch": "dsearch",
         "helium": "helium",
         "home-manager": "home-manager",
         "hyprsplit": "hyprsplit",
+        "lotus": "lotus",
         "niri": "niri",
         "nixpkgs": "nixpkgs_2"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779442398,
+        "narHash": "sha256-jTJOnDFatfRywY1n0daA2tE28qYvl1azfuPawhfnKlE=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "56dc60dd17ff8f527fdd1732a179e47c4eb244f5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "systems": {

@@ -43,6 +43,18 @@
 
   networking.hostName = "nixos";
 
+  fileSystems."/mnt/windows/Program Files (x86)/Steam/steamapps/compatdata" = {
+    device = "/home/gabriel/.local/share/Steam/steamapps/compatdata";
+    fsType = "none";
+    options = [ "bind" "nofail" "x-systemd.requires=mnt-windows.mount" ];
+  };
+
+  fileSystems."/mnt/windows" = {
+    device = "/dev/disk/by-uuid/14C01EF7C01EDF34";
+    fsType = "ntfs-3g";
+    options = [ "rw" "uid=1000" "gid=100" "nofail" ];
+  };
+
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.powersave = false;
   networking.networkmanager.dns = "none";
@@ -74,6 +86,9 @@
 
   console.keyMap = "us-acentos";
 
+  virtualisation.docker.enable = true;
+  virtualisation.podman.enable = true;
+
   users.users.gabriel = {
     isNormalUser = true;
     description = "Gabriel";
@@ -81,6 +96,7 @@
       "networkmanager"
       "wheel"
       "corectrl"
+      "docker"
     ];
     shell = pkgs.nushell;
     packages = with pkgs; [ ];
@@ -92,7 +108,12 @@
     ghostty
     git
     jujutsu
+    clang
+    clang-tools
+    libgcc
+    llvm
     xwayland-satellite # X11 support for niri (Steam etc.)
+    gpu-screen-recorder
     (sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
   ];
   environment.shells = with pkgs; [ nushell ];
@@ -163,6 +184,25 @@
   programs.corectrl.enable = true;
   services.hardware.openrgb.enable = true;
   hardware.i2c.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.kdePackages.xdg-desktop-portal-kde
+    ];
+    config.niri = {
+      "org.freedesktop.impl.portal.FileChooser" = [ "kde" ];
+      "org.freedesktop.impl.portal.ScreenCast" = [ "kde" ];
+      "org.freedesktop.impl.portal.RemoteDesktop" = [ "kde" ];
+    };
+  };
+
+  programs.kdeconnect.enable = true;
+
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
 
   services.accounts-daemon.enable = true;
   services.power-profiles-daemon.enable = true;

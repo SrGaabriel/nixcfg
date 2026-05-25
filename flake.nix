@@ -27,6 +27,16 @@
       url = "github:shezdy/hyprsplit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dsearch = {
+      url = "github:AvengeMedia/danksearch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    lotus = {
+      url = "path:/home/gabriel/Developer/lotus";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -37,6 +47,8 @@
       helium,
       niri,
       dms,
+      dsearch,
+      lotus,
       ...
     }:
     {
