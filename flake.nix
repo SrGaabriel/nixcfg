@@ -37,6 +37,8 @@
       url = "path:/home/gabriel/Developer/lotus";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
 
   outputs =
@@ -58,6 +60,10 @@
           ./configuration.nix
           niri.nixosModules.niri
           home-manager.nixosModules.home-manager
+          {
+            nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.default ];
+            nix.settings.substituters = [ "https://attic.xuyh0120.win/lantian" ];
+          }
           {
             home-manager.users.gabriel = import ./home.nix;
             home-manager.extraSpecialArgs = { inherit helium inputs; };
