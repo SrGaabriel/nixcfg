@@ -2,12 +2,8 @@
 {
   programs.git = {
     enable = true;
-    extraConfig = {
+    settings = {
       core.editor = "hx";
     };
-  };
-
-  programs.helix = {
-    enable = true;
   };
 }

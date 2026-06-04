@@ -10,6 +10,7 @@
     inputs.dsearch.homeModules.dsearch
     ./home/shell.nix
     ./home/dev.nix
+    ./home/editors.nix
     ./home/desktop.nix
     ./home/dms.nix
   ];
@@ -31,6 +32,7 @@
     deno
     nodejs
     uv
+    dust
     gh
     nil
     vesktop
@@ -53,10 +55,12 @@
     tokei
     just
     elan
+    ngrok
     vscode
     typos
     rage
     ocaml
+    onlyoffice-desktopeditors
     dune
     ocamlPackages.utop
     ocamlPackages.ocaml-lsp
@@ -65,15 +69,30 @@
     bottom
     nixd
     zls
+    radicle-node
+    radicle-desktop
     gdb
     typeshare
     fastfetch
+    signal-desktop
     lm_sensors
     amdgpu_top
     kdePackages.plasma-systemmonitor
     zig
+    protobuf
+    ghc
+    songrec
+    cabal-install
+    haskell-language-server
+    thunderbird
+    jetbrains.idea
     helium.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.lotus.packages.${pkgs.stdenv.hostPlatform.system}.lopus
+    (pkgs.haskell.lib.dontCheck (
+      pkgs.haskellPackages.callCabal2nix "dhall-lsp-server"
+        /home/gabriel/Developer/dhall-haskell/dhall-lsp-server
+        { }
+    ))
   ];
 
   nixpkgs.config.allowUnfree = true;

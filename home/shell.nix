@@ -1,10 +1,17 @@
 { pkgs, ... }:
 {
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableNushellIntegration = true;
+  };
+
   programs.nushell = {
     enable = true;
     shellAliases = {
       zed = "zeditor";
       cd = "z";
+      "dstopall" = "docker ps -q | lines | each { |id| docker stop $id }";
     };
     extraConfig = ''
       $env.config.show_banner = false

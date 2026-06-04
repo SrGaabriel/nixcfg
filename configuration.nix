@@ -69,10 +69,16 @@
     llvm
     xwayland-satellite
     gpu-screen-recorder
+    gnumake
+    cmake
   ];
   environment.shells = [ pkgs.nushell ];
 
   programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    ncurses
+    gmp
+  ];
   programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
