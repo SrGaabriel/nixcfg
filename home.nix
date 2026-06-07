@@ -69,6 +69,7 @@
     bottom
     nixd
     zls
+    krita
     radicle-node
     radicle-desktop
     gdb

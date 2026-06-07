@@ -16,6 +16,10 @@
     extraConfig = ''
       $env.config.show_banner = false
       $env.PATH = ($env.PATH | prepend "/home/gabriel/.svm/current/x86_64-unknown-linux-gnu/bin")
+
+      def cnew [name: string] {
+        cargo new $"crates/($name)" --name $"(($env.PWD | path basename))-($name)" --lib
+      }
     '';
   };
 

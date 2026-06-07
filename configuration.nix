@@ -69,6 +69,9 @@
     llvm
     xwayland-satellite
     gpu-screen-recorder
+    grim
+    slurp
+    satty
     gnumake
     cmake
   ];
