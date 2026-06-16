@@ -23,6 +23,7 @@
     EDITOR = "hx";
     VISUAL = "hx";
     GIT_EDITOR = "hx";
+    TERMINAL = "ghostty";
   };
 
   home.packages = with pkgs; [
@@ -50,11 +51,14 @@
     kdePackages.bluedevil
     kdePackages.kwallet
     kdePackages.kwallet-pam
+    kdePackages.dolphin
+    kdePackages.ark
     binocle
     zoxide
     tokei
     just
     elan
+    ryubing
     ngrok
     vscode
     typos
@@ -74,6 +78,7 @@
     radicle-desktop
     gdb
     typeshare
+    koka
     fastfetch
     signal-desktop
     lm_sensors
@@ -83,6 +88,8 @@
     protobuf
     ghc
     songrec
+    qbittorrent
+    aria2
     cabal-install
     haskell-language-server
     thunderbird

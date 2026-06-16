@@ -42,7 +42,13 @@
   };
 
   environment.systemPackages = [
-    (pkgs.sddm-astronaut.override { embeddedTheme = "pixel_sakura"; })
+    ((pkgs.sddm-astronaut.override { embeddedTheme = "pixel_sakura"; }).overrideAttrs (old: {
+      postInstall = (old.postInstall or "") + ''
+        substituteInPlace $out/share/sddm/themes/sddm-astronaut-theme/Components/Input.qml \
+          --replace 'font.capitalization: config.AllowUppercaseLettersInUsernames == "false" ? Font.AllLowercase : Font.MixedCase' \
+                    'font.capitalization: Font.AllUppercase'
+      '';
+    }))
   ];
 
   security.pam.services.sddm.kwallet.enable = true;

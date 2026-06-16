@@ -37,8 +37,8 @@ input {
     mouse {
         // off
         // natural-scroll
-        // accel-speed 0.2
-        // accel-profile "flat"
+        accel-speed 0.2
+        accel-profile "flat"
         // scroll-method "no-scroll"
     }
 
@@ -360,7 +360,7 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
-    Mod+E hotkey-overlay-title="Open File Manager: yazi" { spawn "ghostty" "-e" "yazi"; }
+    Mod+E hotkey-overlay-title="Open File Manager: dolphin" { spawn "dolphin"; }
     Mod+D hotkey-overlay-title="Run an Application: DMS spotlight" { spawn "dms" "ipc" "spotlight" "toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
 

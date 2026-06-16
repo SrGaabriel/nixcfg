@@ -61,6 +61,7 @@
     nushell
     ghostty
     git
+    usbutils
     jujutsu
     clang
     clang-tools
@@ -93,6 +94,15 @@
   services.accounts-daemon.enable = true;
   services.power-profiles-daemon.enable = true;
   services.printing.enable = true;
+
+  services.syncthing = {
+    enable = true;
+    user = "gabriel";
+    group = "users";
+    dataDir = "/home/gabriel";
+    configDir = "/home/gabriel/.config/syncthing";
+    openDefaultPorts = true;
+  };
 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "25.11";

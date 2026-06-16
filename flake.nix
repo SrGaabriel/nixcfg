@@ -34,7 +34,7 @@
     };
 
     lotus = {
-      url = "path:/home/gabriel/Developer/lotus";
+      url = "github:SrGaabriel/lotus/38a9fc8a3a3242844d699566eccf5c1f729b2ed3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

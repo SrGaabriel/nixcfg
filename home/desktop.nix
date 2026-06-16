@@ -68,6 +68,10 @@
     categories = [ "FileManager" ];
   };
 
+  xdg.mimeApps.defaultApplications = {
+    "inode/directory" = [ "org.kde.dolphin.desktop" ];
+  };
+
   xdg.configFile."ghostty/config".text = ''
     background-opacity = 0.85
     background-blur = 20

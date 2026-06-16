@@ -626,14 +626,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1780420101,
-        "narHash": "sha256-ENpcufbjnGvLRu6WmUp3lgYZ5fZgYf7MbxdCENsBixI=",
-        "path": "/home/gabriel/Developer/lotus",
-        "type": "path"
+        "lastModified": 1779987015,
+        "narHash": "sha256-+/N2pqL+J25ZyHZ2TAK+rKYwqOaio9WXakhMCO1gJpE=",
+        "owner": "SrGaabriel",
+        "repo": "lotus",
+        "rev": "38a9fc8a3a3242844d699566eccf5c1f729b2ed3",
+        "type": "github"
       },
       "original": {
-        "path": "/home/gabriel/Developer/lotus",
-        "type": "path"
+        "owner": "SrGaabriel",
+        "repo": "lotus",
+        "rev": "38a9fc8a3a3242844d699566eccf5c1f729b2ed3",
+        "type": "github"
       }
     },
     "niri": {
