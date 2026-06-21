@@ -7,11 +7,6 @@
 
   console.keyMap = "us-acentos";
 
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-  };
-
   programs.niri.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -52,8 +47,6 @@
   ];
 
   security.pam.services.sddm.kwallet.enable = true;
-  security.pam.services.hyprlock = { };
-
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [

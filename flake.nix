@@ -23,11 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprsplit = {
-      url = "github:shezdy/hyprsplit";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     dsearch = {
       url = "github:AvengeMedia/danksearch";
       inputs.nixpkgs.follows = "nixpkgs";
