@@ -336,6 +336,27 @@
         "type": "github"
       }
     },
+    "plum": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782056672,
+        "narHash": "sha256-JmGgpVa7Parr1K1udZKR8KB7I5VxkJRIcx21xJlQ0D4=",
+        "ref": "master",
+        "rev": "092c29fb1193993587a1b86d6ba1cbcc6e867ec3",
+        "revCount": 9,
+        "type": "git",
+        "url": "file:///home/gabriel/Developer/plum"
+      },
+      "original": {
+        "rev": "092c29fb1193993587a1b86d6ba1cbcc6e867ec3",
+        "type": "git",
+        "url": "file:///home/gabriel/Developer/plum"
+      }
+    },
     "quickshell": {
       "inputs": {
         "nixpkgs": [
@@ -367,7 +388,8 @@
         "lotus": "lotus",
         "niri": "niri",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "plum": "plum"
       }
     },
     "rust-analyzer-src": {

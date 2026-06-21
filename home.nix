@@ -72,6 +72,7 @@
     taplo
     bottom
     nixd
+    nixfmt
     zls
     krita
     radicle-node
@@ -94,8 +95,10 @@
     haskell-language-server
     thunderbird
     jetbrains.idea
+    jetbrains.rust-rover
     helium.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.lotus.packages.${pkgs.stdenv.hostPlatform.system}.lopus
+    inputs.plum.packages.${pkgs.stdenv.hostPlatform.system}.default
     (pkgs.haskell.lib.dontCheck (
       pkgs.haskellPackages.callCabal2nix "dhall-lsp-server"
         /home/gabriel/Developer/dhall-haskell/dhall-lsp-server

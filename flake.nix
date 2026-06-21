@@ -33,6 +33,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    plum = {
+      url = "git+file:///home/gabriel/Developer/plum?rev=092c29fb1193993587a1b86d6ba1cbcc6e867ec3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
 
@@ -46,6 +51,7 @@
       dms,
       dsearch,
       lotus,
+      plum,
       ...
     }:
     {

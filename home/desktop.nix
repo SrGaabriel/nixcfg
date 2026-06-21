@@ -41,12 +41,30 @@
     settings = {
       manager.editor = "hx";
       opener = {
-        image = [ { run = ''helium "$@"''; desc = "Helium"; orphan = true; } ];
-        video = [ { run = ''helium "$@"''; desc = "Helium"; orphan = true; } ];
+        image = [
+          {
+            run = ''helium "$@"'';
+            desc = "Helium";
+            orphan = true;
+          }
+        ];
+        video = [
+          {
+            run = ''helium "$@"'';
+            desc = "Helium";
+            orphan = true;
+          }
+        ];
       };
       open.rules = [
-        { mime = "image/*"; use = "image"; }
-        { mime = "video/*"; use = "video"; }
+        {
+          mime = "image/*";
+          use = "image";
+        }
+        {
+          mime = "video/*";
+          use = "video";
+        }
       ];
     };
   };
