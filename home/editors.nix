@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   programs.helix = {
     enable = true;
@@ -126,7 +126,7 @@
     };
   };
 
-  programs.zed-editor = {
+  programs.zed-editor = lib.mkIf pkgs.stdenv.hostPlatform.isx86_64 {
     enable = true;
     extensions = [
       "catppuccin"
@@ -197,27 +197,28 @@
     };
   };
 
-  programs.vscode.mutableExtensionsDir = false;
-
-  programs.vscode.profiles.default = {
-    enable = true;
-    package = pkgs.vscode;
-    extensions = with pkgs.vscode-extensions; [
-      catppuccin.catppuccin-vsc-icons
-      github.copilot
-      rust-lang.rust-analyzer
-      jnoortheen.nix-ide
-      tamasfe.even-better-toml
-    ];
-    userSettings = {
-      "security.workspace.trust.untrustedFiles" = "open";
-      "workbench.colorTheme" = "Dark 2026";
-      "workbench.iconTheme" = "catppuccin-perfect-macchiato";
-      "files.autoSave" = "afterDelay";
-      "files.autoSaveDelay" = 100;
-      "github.copilot.nextEditSuggestions.enabled" = true;
-      "nix.enableLanguageServer" = true;
-      "nix.serverPath" = "nixd";
+  programs.vscode = lib.mkIf pkgs.stdenv.hostPlatform.isx86_64 {
+    mutableExtensionsDir = false;
+    profiles.default = {
+      enable = true;
+      package = pkgs.vscode;
+      extensions = with pkgs.vscode-extensions; [
+        catppuccin.catppuccin-vsc-icons
+        github.copilot
+        rust-lang.rust-analyzer
+        jnoortheen.nix-ide
+        tamasfe.even-better-toml
+      ];
+      userSettings = {
+        "security.workspace.trust.untrustedFiles" = "open";
+        "workbench.colorTheme" = "Dark 2026";
+        "workbench.iconTheme" = "catppuccin-perfect-macchiato";
+        "files.autoSave" = "afterDelay";
+        "files.autoSaveDelay" = 100;
+        "github.copilot.nextEditSuggestions.enabled" = true;
+        "nix.enableLanguageServer" = true;
+        "nix.serverPath" = "nixd";
+      };
     };
   };
 }

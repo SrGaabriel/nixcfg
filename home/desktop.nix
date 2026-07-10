@@ -43,15 +43,15 @@
       opener = {
         image = [
           {
-            run = ''helium "$@"'';
-            desc = "Helium";
+            run = ''xdg-open "$@"'';
+            desc = "Open";
             orphan = true;
           }
         ];
         video = [
           {
-            run = ''helium "$@"'';
-            desc = "Helium";
+            run = ''xdg-open "$@"'';
+            desc = "Open";
             orphan = true;
           }
         ];

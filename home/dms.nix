@@ -21,14 +21,6 @@
             sha256 = "sha256-VoJCaygWnKpv0s0pqTOmzZnPM922qPDMHk4EPcgVnaU=";
           };
         };
-        amdGpuMonitor = {
-          src = pkgs.fetchFromGitHub {
-            owner = "navidagz";
-            repo = "dms-amd-gpu-monitor";
-            rev = "v3.0.0";
-            sha256 = "sha256-oQst63DAWR8GsH6X9g3DiXpkypx70VF9rnZlbJzXUnQ=";
-          };
-        };
         DankKDEConnect.src = "${dmsPlugins}/DankKDEConnect";
         DankLauncherKeys.src = "${dmsPlugins}/DankLauncherKeys";
         soccer = {
@@ -45,14 +37,6 @@
             repo = "DMS-Screenshot";
             rev = "f40deaf839b6e45feb978fa83a28c3db117b3c87";
             sha256 = "sha256-Vf2J5Gmb/gyMDC9YhU4cxqSqPTbJR5WXdOheKssL8qw=";
-          };
-        };
-        gameControllerBattery = {
-          src = pkgs.fetchFromGitHub {
-            owner = "Hujair";
-            repo = "gameControllerBattery";
-            rev = "v1.2.0";
-            sha256 = "sha256-irWI2LI8IOhva/DpfF8nI23wQMKyOPGNv86G9ZDjJ4g=";
           };
         };
         nixMonitor = {

@@ -60,7 +60,6 @@ input {
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
     // focus-follows-mouse max-scroll-amount="0%"
 }
-
 spawn-at-startup "xwayland-satellite" ":0"
 environment {
     DISPLAY ":0"
@@ -258,8 +257,6 @@ layout {
         // bottom 64
     }
 }
-
-spawn-at-startup "sh" "-c" "niri msg action focus-output DP-3"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -571,10 +568,3 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 
-output "DP-3" {
-    scale 1.25
-    position x=0 y=0
-}
-output "HDMI-A-1" {
-    position x=2752 y=0
-}

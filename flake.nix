@@ -39,6 +39,11 @@
     };
 
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+
+    x1e-nixos-config = {
+      url = "github:kuruczgy/x1e-nixos-config/pr/switch-to-upstream-kernel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -52,25 +57,54 @@
       dsearch,
       lotus,
       plum,
+      x1e-nixos-config,
       ...
     }:
+    let
+      mkHost = {
+        system,
+        hostModule,
+        homeModule,
+        extraModules ? [ ],
+      }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            hostModule
+            niri.nixosModules.niri
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.users.gabriel = import homeModule;
+              home-manager.extraSpecialArgs = { inherit helium inputs; };
+              home-manager.backupFileExtension = "hm-bak";
+            }
+          ] ++ extraModules;
+        };
+    in
     {
-      nixosConfigurations.gabriel = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./configuration.nix
-          niri.nixosModules.niri
-          home-manager.nixosModules.home-manager
-          {
-            nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.default ];
-            nix.settings.substituters = [ "https://attic.xuyh0120.win/lantian" ];
-          }
-          {
-            home-manager.users.gabriel = import ./home.nix;
-            home-manager.extraSpecialArgs = { inherit helium inputs; };
-            home-manager.backupFileExtension = "hm-bak";
-          }
-        ];
+      nixosConfigurations = {
+        desktop = mkHost {
+          system = "x86_64-linux";
+          hostModule = ./hosts/desktop;
+          homeModule = ./home/hosts/desktop.nix;
+          extraModules = [
+            {
+              nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.default ];
+              nix.settings.substituters = [ "https://attic.xuyh0120.win/lantian" ];
+            }
+          ];
+        };
+
+        yoga-slim-7x = mkHost {
+          system = "aarch64-linux";
+          hostModule = ./hosts/yoga-slim-7x;
+          homeModule = ./home/hosts/yoga-slim-7x.nix;
+          extraModules = [ x1e-nixos-config.nixosModules.x1e ];
+        };
       };
+
+      # Compatibility alias for the current desktop rebuild command.
+      nixosConfigurations.gabriel = self.nixosConfigurations.desktop;
     };
 }
