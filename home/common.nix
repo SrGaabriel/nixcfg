@@ -61,6 +61,8 @@
     radicle-node
     radicle-desktop
     gdb
+    obsidian
+    ticktick
     typeshare
     koka
     fastfetch

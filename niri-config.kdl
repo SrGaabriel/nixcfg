@@ -60,9 +60,18 @@ input {
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
     // focus-follows-mouse max-scroll-amount="0%"
 }
+
+cursor {
+    xcursor-theme "breeze_cursors"
+    xcursor-size 18
+}
+
 spawn-at-startup "xwayland-satellite" ":0"
 environment {
     DISPLAY ":0"
+    GTK_IM_MODULE "ibus"
+    QT_IM_MODULE "ibus"
+    XMODIFIERS "@im=ibus"
 }
 
 // You can configure outputs by their name, which you can find

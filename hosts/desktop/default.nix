@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -12,4 +12,17 @@
 
   networking.hostName = "nixos";
   system.stateVersion = "25.11";
+
+  services.mullvad-vpn = {
+    enable = true;
+    package = pkgs.mullvad-vpn;
+  };
+
+  boot.zswap.enable = true;
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 32768;
+    }
+  ];
 }

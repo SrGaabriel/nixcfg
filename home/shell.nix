@@ -11,6 +11,7 @@
     shellAliases = {
       zed = "zeditor";
       cd = "z";
+      cat = "bat";
       "dstopall" = "docker ps -q | lines | each { |id| docker stop $id }";
     };
     extraConfig = ''

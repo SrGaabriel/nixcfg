@@ -38,6 +38,14 @@
     vscode
     onlyoffice-desktopeditors
     krita
+    kdePackages.kdenlive
+    temurin-bin-21
+    (prismlauncher.override {
+      jdks = [
+        temurin-bin-17
+        temurin-bin-21
+      ];
+    })
     signal-desktop
     amdgpu_top
     kdePackages.plasma-systemmonitor
@@ -45,6 +53,7 @@
     jetbrains.idea
     jetbrains.rust-rover
     helium.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight
     inputs.lotus.packages.${pkgs.stdenv.hostPlatform.system}.lopus
     inputs.plum.packages.${pkgs.stdenv.hostPlatform.system}.default
     (pkgs.haskell.lib.dontCheck (

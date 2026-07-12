@@ -13,6 +13,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,6 +25,12 @@
 
     dms = {
       url = "github:AvengeMedia/DankMaterialShell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.quickshell.follows = "quickshell";
+    };
+
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/quickshell/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -52,6 +63,7 @@
       nixpkgs,
       home-manager,
       helium,
+      zen-browser,
       niri,
       dms,
       dsearch,

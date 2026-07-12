@@ -15,11 +15,14 @@
     enable = true;
     extraPortals = [
       pkgs.kdePackages.xdg-desktop-portal-kde
+      pkgs.xdg-desktop-portal-gnome
     ];
+
     config.niri = {
       "org.freedesktop.impl.portal.FileChooser" = [ "kde" ];
-      "org.freedesktop.impl.portal.ScreenCast" = [ "kde" ];
-      "org.freedesktop.impl.portal.RemoteDesktop" = [ "kde" ];
+      "org.freedesktop.impl.portal.Settings" = [ "gnome" ];
+      "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
+      "org.freedesktop.impl.portal.RemoteDesktop" = [ "gnome" ];
     };
   };
 
@@ -36,6 +39,7 @@
   };
 
   environment.systemPackages = [
+    pkgs.gpu-screen-recorder
     ((pkgs.sddm-astronaut.override { embeddedTheme = "pixel_sakura"; }).overrideAttrs (old: {
       postInstall = (old.postInstall or "") + ''
         substituteInPlace $out/share/sddm/themes/sddm-astronaut-theme/Components/Input.qml \

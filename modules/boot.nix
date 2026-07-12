@@ -7,8 +7,22 @@
     efiSupport = true;
     device = "nodev";
     theme = pkgs.catppuccin-grub;
-    configurationLimit = 2;
+    configurationLimit = 1;
     useOSProber = true;
+    extraEntries = ''
+      menuentry "UEFI Firmware Settings" {
+        fwsetup
+      }
+
+      menuentry "NixOS Live USB" {
+        insmod part_gpt
+        insmod part_msdos
+        insmod fat
+        insmod chain
+        search --no-floppy --fs-uuid --set=root 7210-FC57
+        chainloader /EFI/BOOT/BOOTX64.EFI
+      }
+    '';
   };
   boot.loader.timeout = null;
 

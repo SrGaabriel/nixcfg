@@ -16,6 +16,7 @@
     "1.1.1.1"
     "8.8.8.8"
   ];
+  services.nscd.enableNsncd = true;
 
   time.timeZone = "America/Sao_Paulo";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -29,6 +30,10 @@
     LC_PAPER = "pt_BR.UTF-8";
     LC_TELEPHONE = "pt_BR.UTF-8";
     LC_TIME = "pt_BR.UTF-8";
+  };
+  i18n.inputMethod = {
+    enable = true;
+    type = "ibus";
   };
 
   virtualisation.docker.enable = true;

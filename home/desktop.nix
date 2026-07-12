@@ -3,11 +3,28 @@
   programs.dsearch = {
     enable = true;
     package = inputs.dsearch.packages.${pkgs.stdenv.hostPlatform.system}.dsearch.overrideAttrs {
-      vendorHash = "sha256-scvZWbMHAhpYWCU0xZK1E6h6sAkoXegqI1iYS44fcCg=";
+      vendorHash = "sha256-Gq3tVwe39m5KGfkI3DEnQEQEGs/cLDCiwx6XFM61f6c=";
     };
   };
 
   programs.niri.config = builtins.readFile ../niri-config.kdl;
+
+  qt = {
+    enable = true;
+    platformTheme.name = "kde";
+    style = {
+      name = "breeze";
+      package = pkgs.kdePackages.breeze;
+    };
+  };
+
+  home.pointerCursor = {
+    name = "breeze_cursors";
+    package = pkgs.kdePackages.breeze;
+    size = 18;
+    gtk.enable = true;
+    x11.enable = true;
+  };
 
   gtk = {
     enable = true;
