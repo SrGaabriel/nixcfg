@@ -3,6 +3,13 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+
+    import-tree.url = "github:vic/import-tree";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,6 +41,11 @@
       inputs.quickshell.follows = "quickshell";
     };
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     quickshell = {
       url = "git+https://git.outfoxxed.me/quickshell/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,93 +74,7 @@
     };
   };
 
-  outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      home-manager,
-      nix-darwin,
-      helium,
-      zen-browser,
-      niri,
-      dms,
-      dsearch,
-      lotus,
-      plum,
-      x1e-nixos-config,
-      ...
-    }:
-    let
-      mkHost =
-        {
-          system,
-          hostModule,
-          homeModule,
-          extraModules ? [ ],
-        }:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [
-            hostModule
-            niri.nixosModules.niri
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.users.gabriel = import homeModule;
-              home-manager.extraSpecialArgs = { inherit helium inputs; };
-              home-manager.backupFileExtension = "hm-bak";
-            }
-          ] ++ extraModules;
-        };
-
-      mkDarwinHost =
-        {
-          hostModule,
-          homeModule,
-          extraModules ? [ ],
-        }:
-        nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit inputs; };
-          modules = [
-            hostModule
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.users.gabriel = import homeModule;
-              home-manager.extraSpecialArgs = { inherit inputs; };
-              home-manager.backupFileExtension = "hm-bak";
-            }
-          ] ++ extraModules;
-        };
-    in
-    {
-      nixosConfigurations = {
-        desktop = mkHost {
-          system = "x86_64-linux";
-          hostModule = ./hosts/desktop;
-          homeModule = ./home/hosts/desktop.nix;
-          extraModules = [
-            {
-              nixpkgs.overlays = [ inputs.nix-cachyos-kernel.overlays.default ];
-              nix.settings.substituters = [ "https://attic.xuyh0120.win/lantian" ];
-            }
-          ];
-        };
-
-        yoga-slim-7x = mkHost {
-          system = "aarch64-linux";
-          hostModule = ./hosts/yoga-slim-7x;
-          homeModule = ./home/hosts/yoga-slim-7x.nix;
-          extraModules = [ x1e-nixos-config.nixosModules.x1e ];
-        };
-      };
-
-      nixosConfigurations.gabriel = self.nixosConfigurations.desktop;
-
-      darwinConfigurations = {
-        fortitudo = mkDarwinHost {
-          hostModule = ./hosts/fortitudo;
-          homeModule = ./home/hosts/fortitudo.nix;
-        };
-      };
-    };
+  # Every file under ./modules is a flake-parts module, imported automatically.
+  # Aspects live in modules/*.nix, hosts compose them in modules/hosts/*.nix.
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }
