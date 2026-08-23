@@ -1,4 +1,7 @@
 { pkgs, lib, ... }:
+let
+  guiEditors = !(pkgs.stdenv.hostPlatform.isLinux && pkgs.stdenv.hostPlatform.isAarch64);
+in
 {
   programs.helix = {
     enable = true;
@@ -126,7 +129,7 @@
     };
   };
 
-  programs.zed-editor = lib.mkIf pkgs.stdenv.hostPlatform.isx86_64 {
+  programs.zed-editor = lib.mkIf guiEditors {
     enable = true;
     extensions = [
       "catppuccin"
@@ -169,6 +172,8 @@
       lsp = {
         hls.initialization_options.haskell.formattingProvider = "fourmolu";
         rust-analyzer.initialization_options.check.command = "clippy";
+      }
+      // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         cargo-tom = {
           initialization_options = {
             offline = false;
@@ -194,14 +199,15 @@
       format_on_save = "on";
       vim_mode = false;
       load_direnv = "shell_hook";
+      terminal.shell.program = lib.getExe pkgs.nushell;
     };
   };
 
-  programs.vscode = lib.mkIf pkgs.stdenv.hostPlatform.isx86_64 {
+  programs.vscode = lib.mkIf guiEditors {
+    enable = true;
+    package = pkgs.vscode;
     mutableExtensionsDir = false;
     profiles.default = {
-      enable = true;
-      package = pkgs.vscode;
       extensions = with pkgs.vscode-extensions; [
         catppuccin.catppuccin-vsc-icons
         github.copilot

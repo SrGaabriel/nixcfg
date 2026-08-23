@@ -49,40 +49,5 @@
   xdg.configFile."ghostty/config".text = ''
     background-opacity = 0.85
     background-blur = 20
-
   '';
-
-  programs.yazi = {
-    enable = true;
-    shellWrapperName = "y";
-    settings = {
-      manager.editor = "hx";
-      opener = {
-        image = [
-          {
-            run = ''xdg-open "$@"'';
-            desc = "Open";
-            orphan = true;
-          }
-        ];
-        video = [
-          {
-            run = ''xdg-open "$@"'';
-            desc = "Open";
-            orphan = true;
-          }
-        ];
-      };
-      open.rules = [
-        {
-          mime = "image/*";
-          use = "image";
-        }
-        {
-          mime = "video/*";
-          use = "video";
-        }
-      ];
-    };
-  };
 }

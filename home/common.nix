@@ -7,7 +7,8 @@
   ];
 
   home.username = "gabriel";
-  home.homeDirectory = "/home/gabriel";
+  home.homeDirectory =
+    if pkgs.stdenv.hostPlatform.isDarwin then "/Users/gabriel" else "/home/gabriel";
   home.stateVersion = "25.11";
   home.sessionVariables = {
     EDITOR = "hx";
@@ -22,59 +23,48 @@
     deno
     nodejs
     uv
-    dust
-    gh
-    nil
-    numbat
-    bat
-    ripgrep
-    hexyl
-    hyperfine
-    fd
-    eza
-    pastel
-    diskus
-    kdePackages.bluedevil
-    kdePackages.kwallet
-    kdePackages.kwallet-pam
-    kdePackages.dolphin
-    kdePackages.ark
-    binocle
-    zoxide
-    tokei
-    just
-    elan
-    ryubing
-    ngrok
-    typos
-    rage
+    ghc
+    cabal-install
     ocaml
-    dune
+    dune_3
     ocamlPackages.utop
-    ocamlPackages.ocaml-lsp
-    ocamlPackages.ocamlformat
-    taplo
-    bottom
+    elan
+    zig
+    koka
+
+    nil
     nixd
     nixfmt
     zls
-    radicle-node
-    radicle-desktop
-    gdb
-    obsidian
-    ticktick
-    typeshare
-    koka
-    fastfetch
-    lm_sensors
-    zig
-    protobuf
-    ghc
-    songrec
-    qbittorrent
-    aria2
-    cabal-install
     haskell-language-server
+    ocamlPackages.ocaml-lsp
+    ocamlPackages.ocamlformat
+    taplo
+    typeshare
+    typos
+
+    bat
+    ripgrep
+    fd
+    eza
+    zoxide
+    dust
+    diskus
+    hexyl
+    hyperfine
+    tokei
+    just
+    numbat
+    pastel
+    binocle
+    bottom
+    fastfetch
+    rage
+    aria2
+    ngrok
+    gh
+    protobuf
+    radicle-node
   ];
 
   nixpkgs.config.allowUnfree = true;

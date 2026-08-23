@@ -4,6 +4,7 @@
     inputs.dms.homeModules.dank-material-shell
     inputs.dsearch.homeModules.dsearch
     ../common.nix
+    ../linux.nix
     ../desktop.nix
     ../dms.nix
   ];

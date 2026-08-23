@@ -10,6 +10,7 @@
     inputs.dms.homeModules.dank-material-shell
     inputs.dsearch.homeModules.dsearch
     ../common.nix
+    ../linux.nix
     ../desktop.nix
     ../dms.nix
     ../dms-desktop.nix
@@ -31,11 +32,9 @@
   );
 
   home.packages = with pkgs; [
-    zed-editor
     vesktop
     mangohud
     spotifywm
-    vscode
     onlyoffice-desktopeditors
     krita
     kdePackages.kdenlive

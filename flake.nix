@@ -1,10 +1,15 @@
 {
-  description = "NixOS config";
+  description = "NixOS and nix-darwin config";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -62,6 +67,7 @@
       self,
       nixpkgs,
       home-manager,
+      nix-darwin,
       helium,
       zen-browser,
       niri,
@@ -73,12 +79,13 @@
       ...
     }:
     let
-      mkHost = {
-        system,
-        hostModule,
-        homeModule,
-        extraModules ? [ ],
-      }:
+      mkHost =
+        {
+          system,
+          hostModule,
+          homeModule,
+          extraModules ? [ ],
+        }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
@@ -89,6 +96,25 @@
             {
               home-manager.users.gabriel = import homeModule;
               home-manager.extraSpecialArgs = { inherit helium inputs; };
+              home-manager.backupFileExtension = "hm-bak";
+            }
+          ] ++ extraModules;
+        };
+
+      mkDarwinHost =
+        {
+          hostModule,
+          homeModule,
+          extraModules ? [ ],
+        }:
+        nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit inputs; };
+          modules = [
+            hostModule
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.users.gabriel = import homeModule;
+              home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.backupFileExtension = "hm-bak";
             }
           ] ++ extraModules;
@@ -116,7 +142,13 @@
         };
       };
 
-      # Compatibility alias for the current desktop rebuild command.
       nixosConfigurations.gabriel = self.nixosConfigurations.desktop;
+
+      darwinConfigurations = {
+        fortitudo = mkDarwinHost {
+          hostModule = ./hosts/fortitudo;
+          homeModule = ./home/hosts/fortitudo.nix;
+        };
+      };
     };
 }

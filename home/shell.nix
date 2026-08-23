@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+  openCommand = if pkgs.stdenv.hostPlatform.isDarwin then "open" else "xdg-open";
+in
 {
   programs.direnv = {
     enable = true;
@@ -31,5 +34,39 @@
   programs.starship = {
     enable = true;
     enableNushellIntegration = true;
+  };
+
+  programs.yazi = {
+    enable = true;
+    shellWrapperName = "y";
+    settings = {
+      manager.editor = "hx";
+      opener = {
+        image = [
+          {
+            run = ''${openCommand} "$@"'';
+            desc = "Open";
+            orphan = true;
+          }
+        ];
+        video = [
+          {
+            run = ''${openCommand} "$@"'';
+            desc = "Open";
+            orphan = true;
+          }
+        ];
+      };
+      open.rules = [
+        {
+          mime = "image/*";
+          use = "image";
+        }
+        {
+          mime = "video/*";
+          use = "video";
+        }
+      ];
+    };
   };
 }
