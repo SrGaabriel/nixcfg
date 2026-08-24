@@ -2,6 +2,12 @@
 let
   tomlFormat = pkgs.formats.toml { };
 
+  startupApps = {
+    omniwm = "OmniWM";
+    bitwarden = "Bitwarden";
+    ticktick = "TickTick";
+  };
+
   numbered =
     prefix: f:
     builtins.listToAttrs (
@@ -69,6 +75,28 @@ in
       "/opt/homebrew/sbin"
       "/usr/local/bin"
     ]
+  '';
+
+  launchd.agents = lib.mapAttrs (_: app: {
+    enable = true;
+    config = {
+      ProgramArguments = [
+        "/usr/bin/open"
+        "-a"
+        "/Applications/${app}.app"
+      ];
+      RunAtLoad = true;
+    };
+  }) startupApps;
+
+  home.activation.pruneLoginItems = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run /usr/bin/osascript -e ${
+      lib.escapeShellArg (
+        "tell application \"System Events\" to delete (every login item whose "
+        + lib.concatMapStringsSep " and " (app: "name is not \"${app}\"") (lib.attrValues startupApps)
+        + ")"
+      )
+    } || echo "warning: could not prune login items" >&2
   '';
 
   home.activation.defaultTerminal = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
