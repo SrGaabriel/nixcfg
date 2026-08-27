@@ -147,15 +147,36 @@ in
       programs.niri.config = lib.mkForce (
         (builtins.readFile ../../niri-config.kdl)
         + ''
-          spawn-at-startup "sh" "-c" "niri msg action focus-output DP-3"
+          // Outputs are matched by monitor identity rather than connector.
+          // The 27" has shown up on both HDMI-A-1 and HDMI-A-2 (different
+          // GPUs), and DP-3 is whichever primary happens to be plugged in.
 
-          output "DP-3" {
-              scale 1.0
+          // Samsung Odyssey G5 34" ultrawide; 3440x1440@165 is its preferred
+          // mode, so it needs no explicit mode. 1.25 gives 2752x1152 logical.
+          output "Samsung Electric Company LC34G55T HX7L201471" {
+              scale 1.25
               position x=0 y=0
           }
-          output "HDMI-A-1" {
-              position x=1920 y=0
+
+          // Sceptre K32 32" 1080p. Only ~70 DPI, so scale 1.0 renders
+          // everything noticeably larger than the ultrawide's effective ~88
+          // DPI; 0.9 splits the difference at ~77. It also reports 60Hz as
+          // preferred despite advertising 240, hence the forced mode.
+          output "Sceptre Tech Inc Sceptre K32 0x0002BB29" {
+              mode "1920x1080@240"
+              scale 0.9
+              position x=0 y=0
           }
+
+          // Secondary 27" (60Hz panel, nothing to gain from a forced mode).
+          // Left unpositioned on purpose: niri puts it right of whichever
+          // primary is present, and the two differ in width (2752 vs 1920).
+          output "Samsung Electric Company C27F390 HX5R200478" {
+              scale 1.0
+          }
+
+          // Focus whichever primary is connected.
+          spawn-sh-at-startup "niri msg action focus-output 'Samsung Electric Company LC34G55T HX7L201471' || niri msg action focus-output 'Sceptre Tech Inc Sceptre K32 0x0002BB29'"
         ''
       );
 
