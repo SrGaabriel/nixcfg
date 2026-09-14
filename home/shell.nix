@@ -11,6 +11,9 @@ in
 
   programs.nushell = {
     enable = true;
+    # rustc drops rustc-ice-*.txt in the cwd on an internal compiler error;
+    # "0" is the documented opt-out.
+    environmentVariables.RUSTC_ICE = "0";
     shellAliases = {
       zed = "zeditor";
       cd = "z";

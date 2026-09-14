@@ -17,15 +17,16 @@
     ];
 
     casks = [
-      "ghostty"
-      "spotify"
-      "signal"
-      "obsidian"
-      "ticktick"
-      "claude-code"
       "bitwarden"
-      "jetbrains-toolbox"
+      "ticktick"
+      "linearmouse"
       "omniwm"
+      "microsoft-office"
+      "jetbrains-toolbox"
     ];
+
+    masApps = {
+      Xcode = 497799835;
+    };
   };
 }

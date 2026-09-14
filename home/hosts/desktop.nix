@@ -4,9 +4,7 @@
   inputs,
   lib,
   ...
-}:
-{
-  imports = [
+}:{  imports = [
     inputs.dms.homeModules.dank-material-shell
     inputs.dsearch.homeModules.dsearch
     ../common.nix

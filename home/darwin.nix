@@ -1,12 +1,15 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, inputs, ... }:
 let
   tomlFormat = pkgs.formats.toml { };
+  jsonFormat = pkgs.formats.json { };
 
   startupApps = {
     omniwm = "OmniWM";
-    bitwarden = "Bitwarden";
     ticktick = "TickTick";
+    linearmouse = "LinearMouse";
   };
+
+  omniwmDefaults = builtins.fromTOML (builtins.readFile ./omniwm-defaults.toml);
 
   numbered =
     prefix: f:
@@ -63,6 +66,31 @@ let
   }
   // numbered "focusColumn" (_: "Unassigned")
   // numbered "moveColumnToWorkspace" (n: "Control+Option+${toString n}");
+
+  omniwmSettings =
+    (lib.recursiveUpdate omniwmDefaults {
+      general.ipcEnabled = true;
+      workspaceBar.enabled = false;
+      gestures = {
+        workspaceSwipeEnabled = true;
+        workspaceSwipeAxis = "vertical";
+        workspaceSwipeFingerCount = 3;
+      };
+      borders = {
+        width = 2.0;
+        color = {
+          red = 0.776;
+          green = 0.627;
+          blue = 0.965;
+          alpha = 1.0;
+        };
+      };
+    })
+    // {
+      hotkeys = map (
+        h: h // lib.optionalAttrs (hotkeys ? ${h.id}) { binding = hotkeys.${h.id}; }
+      ) omniwmDefaults.hotkeys;
+    };
 in
 {
   programs.nushell.extraEnv = ''
@@ -113,26 +141,38 @@ in
     macos-titlebar-style = tabs
   '';
 
-  xdg.configFile."omniwm/settings.toml".source = tomlFormat.generate "omniwm-settings.toml" {
-    general.ipcEnabled = true;
-    workspaceBar.enabled = false;
-
-    gestures = {
-      workspaceSwipeEnabled = true;
-      workspaceSwipeAxis = "vertical";
-      workspaceSwipeFingerCount = 3;
-    };
-
-    borders = {
-      width = 2.0;
-      color = {
-        red = 0.776;
-        green = 0.627;
-        blue = 0.965;
-        alpha = 1.0;
-      };
-    };
-
-    hotkeys = lib.mapAttrsToList (id: binding: { inherit id binding; }) hotkeys;
+  xdg.configFile."linearmouse/linearmouse.json".source = jsonFormat.generate "linearmouse.json" {
+    "$schema" = "https://schema.linearmouse.app/0.11.4";
+    schemes = [
+      {
+        "if" = {
+          device.category = "mouse";
+        };
+        scrolling = {
+          reverse.vertical = true;
+        };
+      }
+    ];
   };
+
+  home.packages = with pkgs; [
+    ghostty-bin
+    spotify
+    signal-desktop
+    obsidian
+    claude-code
+    vesktop
+    raycast
+    nom
+    docker
+    docker-compose
+    colima
+    nh
+    # deno also ships a `dx` alias; dioxus wins.
+    (lib.hiPrio dioxus-cli)
+    inputs.bend.packages.${pkgs.stdenv.hostPlatform.system}.default
+  ];
+
+  xdg.configFile."omniwm/settings.toml".source =
+    tomlFormat.generate "omniwm-settings.toml" omniwmSettings;
 }

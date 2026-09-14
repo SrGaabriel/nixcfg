@@ -64,7 +64,6 @@
     ngrok
     gh
     protobuf
-    radicle-node
   ];
 
   nixpkgs.config.allowUnfree = true;

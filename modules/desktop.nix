@@ -8,6 +8,8 @@
   console.keyMap = "us-acentos";
 
   programs.niri.enable = true;
+  # niri-flake's own build asserts on libdisplay-info_0_2, which nixpkgs removed.
+  programs.niri.package = pkgs.niri;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 

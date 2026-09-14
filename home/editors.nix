@@ -125,6 +125,7 @@ in
           command = "souls";
           args = [ ];
         };
+        rust-analyzer.environment.RUSTC_ICE = "0";
       };
     };
   };
@@ -171,7 +172,11 @@ in
       };
       lsp = {
         hls.initialization_options.haskell.formattingProvider = "fourmolu";
-        rust-analyzer.initialization_options.check.command = "clippy";
+        rust-analyzer.initialization_options = {
+          check.command = "clippy";
+          # Applies to cargo, rustc and anything else it spawns.
+          cargo.extraEnv.RUSTC_ICE = "0";
+        };
       }
       // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         cargo-tom = {
@@ -198,7 +203,7 @@ in
       };
       format_on_save = "on";
       vim_mode = false;
-      load_direnv = "shell_hook";
+      load_direnv = "direct";
       terminal.shell.program = lib.getExe pkgs.nushell;
     };
   };

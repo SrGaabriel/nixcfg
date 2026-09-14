@@ -1,5 +1,7 @@
 { lib, pkgs, ... }:
 {
+  imports = [ ../shared.nix ];
+
   nix.enable = false;
 
   nixpkgs.config.allowUnfree = true;
@@ -35,6 +37,13 @@
     "/opt/homebrew/sbin"
   ];
 
+  # macOS otherwise saves the open-app set at shutdown and relaunches it at
+  # login. nix-darwin has no typed option for this, hence the raw domain.
+  system.defaults.CustomUserPreferences."com.apple.loginwindow" = {
+    TALLogoutSavesState = false;
+    LoginwindowLaunchesRelaunchApps = false;
+  };
+
   documentation.doc.enable = false;
   system.tools.darwin-uninstaller.enable = false;
 
@@ -45,5 +54,4 @@
     nerd-fonts.jetbrains-mono
   ];
 
-  time.timeZone = "America/Sao_Paulo";
 }

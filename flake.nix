@@ -31,12 +31,6 @@
     dms = {
       url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.quickshell.follows = "quickshell";
-    };
-
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/quickshell/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     dsearch = {
@@ -54,12 +48,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
-
-    x1e-nixos-config = {
-      url = "github:kuruczgy/x1e-nixos-config/pr/switch-to-upstream-kernel";
+    bend = {
+      url = "github:nicolas-abril/bend2-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      # The wrapper's own lock lags upstream; track bend directly.
+      inputs.bend2.url = "github:bendlang/bend";
     };
+
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
 
   outputs =
@@ -75,7 +71,6 @@
       dsearch,
       lotus,
       plum,
-      x1e-nixos-config,
       ...
     }:
     let
@@ -132,13 +127,6 @@
               nix.settings.substituters = [ "https://attic.xuyh0120.win/lantian" ];
             }
           ];
-        };
-
-        yoga-slim-7x = mkHost {
-          system = "aarch64-linux";
-          hostModule = ./hosts/yoga-slim-7x;
-          homeModule = ./home/hosts/yoga-slim-7x.nix;
-          extraModules = [ x1e-nixos-config.nixosModules.x1e ];
         };
       };
 
