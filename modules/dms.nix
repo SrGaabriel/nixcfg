@@ -1,4 +1,3 @@
-{ inputs, ... }:
 {
   flake.modules.homeManager.dms =
     { pkgs, ... }:
@@ -54,7 +53,6 @@
       };
     };
 
-  # Plugins that only make sense on a machine with an AMD GPU and a controller.
   flake.modules.homeManager.dms-desktop =
     { pkgs, ... }:
     {
@@ -76,62 +74,5 @@
           };
         };
       };
-    };
-
-  flake.modules.homeManager.noctalia =
-    {
-      pkgs,
-      lib,
-      ...
-    }:
-    let
-      desktopShell = pkgs.writeShellApplication {
-        name = "desktop-shell";
-        runtimeInputs = [ pkgs.systemd ];
-        text = ''
-          case "''${1:-toggle}" in
-            dms)
-              systemctl --user stop noctalia.service
-              systemctl --user start dms.service
-              ;;
-            noctalia)
-              systemctl --user stop dms.service
-              systemctl --user start noctalia.service
-              ;;
-            launcher)
-              if systemctl --user --quiet is-active noctalia.service; then
-                exec noctalia msg panel-toggle launcher
-              else
-                exec dms ipc spotlight toggle
-              fi
-              ;;
-            toggle)
-              if systemctl --user --quiet is-active noctalia.service; then
-                exec "$0" dms
-              else
-                exec "$0" noctalia
-              fi
-              ;;
-            *)
-              echo "usage: desktop-shell {dms|noctalia|launcher|toggle}" >&2
-              exit 2
-              ;;
-          esac
-        '';
-      };
-    in
-    {
-      imports = [ inputs.noctalia.homeModules.default ];
-
-      programs.noctalia = {
-        enable = true;
-        systemd.enable = true;
-      };
-
-      # DMS remains the login shell. This keeps Noctalia's unit available for
-      # desktop-shell without starting two bars and notification daemons.
-      systemd.user.services.noctalia.Install.WantedBy = lib.mkForce [ ];
-
-      home.packages = [ desktopShell ];
     };
 }

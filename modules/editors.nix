@@ -167,8 +167,8 @@
           buffer_font_size = 16;
           autosave.after_delay.milliseconds = 100;
           theme = {
-            mode = "dark";
-            light = "GitHub Light";
+            mode = "system";
+            light = "Ayu Light";
             dark = "Gruvbox Dark Hard";
           };
           lsp = {
@@ -180,13 +180,6 @@
               initialization_options = {
                 offline = false;
                 sort_format = true;
-              };
-              binary = {
-                path = "/home/gabriel/Developer/cargotom/target/release/cargotom";
-                arguments = [
-                  "--storage"
-                  "."
-                ];
               };
             };
           };
@@ -200,7 +193,7 @@
           };
           format_on_save = "on";
           vim_mode = false;
-          load_direnv = "shell_hook";
+          load_direnv = "direct";
           terminal.shell.program = lib.getExe pkgs.nushell;
         };
       };

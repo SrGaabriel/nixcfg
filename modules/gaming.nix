@@ -11,6 +11,8 @@
       programs.gamemode.enable = true;
       hardware.graphics.enable32Bit = true;
 
+      
+
       systemd.services.amdgpu-high-clocks = {
         description = "Force AMD GPU to high performance level";
         wantedBy = [ "multi-user.target" ];

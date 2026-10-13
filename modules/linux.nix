@@ -1,5 +1,4 @@
 {
-  # Packages that only exist, or only make sense, on the Linux hosts.
   flake.modules.homeManager.linux =
     { pkgs, ... }:
     {
@@ -13,7 +12,6 @@
         songrec
         ticktick
         ryubing
-        radicle-desktop
         gdb
         obsidian
         qbittorrent

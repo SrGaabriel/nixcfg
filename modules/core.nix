@@ -1,4 +1,4 @@
-top@{ config, ... }:
+top@{ inputs, ... }:
 {
   flake.modules.nixos.core =
     { pkgs, ... }:
@@ -8,6 +8,7 @@ top@{ config, ... }:
           "nix-command"
           "flakes"
         ];
+        settings.auto-optimise-store = true;
       };
 
       networking.networkmanager = {
@@ -21,7 +22,7 @@ top@{ config, ... }:
       ];
       services.nscd.enableNsncd = true;
 
-      time.timeZone = "America/Sao_Paulo";
+      time.timeZone = top.config.flake.timeZone;
       i18n.defaultLocale = "en_US.UTF-8";
       i18n.extraLocaleSettings = {
         LC_ADDRESS = "pt_BR.UTF-8";
@@ -137,6 +138,7 @@ top@{ config, ... }:
         deno
         nodejs
         uv
+        inputs.bend.packages.${pkgs.stdenv.hostPlatform.system}.default
         ghc
         cabal-install
         ocaml
@@ -145,7 +147,7 @@ top@{ config, ... }:
         elan
         zig
         koka
-
+        sea-orm-cli
         nil
         nixd
         nixfmt
@@ -156,7 +158,6 @@ top@{ config, ... }:
         taplo
         typeshare
         typos
-
         bat
         ripgrep
         fd
@@ -168,6 +169,7 @@ top@{ config, ... }:
         hyperfine
         tokei
         just
+        zellij
         numbat
         pastel
         binocle
@@ -178,7 +180,6 @@ top@{ config, ... }:
         ngrok
         gh
         protobuf
-        radicle-node
       ];
 
       nixpkgs.config.allowUnfree = true;

@@ -41,11 +41,6 @@
       inputs.quickshell.follows = "quickshell";
     };
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     quickshell = {
       url = "git+https://git.outfoxxed.me/quickshell/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,13 +51,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lotus = {
-      url = "github:SrGaabriel/lotus/38a9fc8a3a3242844d699566eccf5c1f729b2ed3";
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+
     plum = {
       url = "git+file:///home/gabriel/Developer/plum?rev=092c29fb1193993587a1b86d6ba1cbcc6e867ec3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    bend = {
+      url = "github:bendlang/bend";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -74,7 +75,5 @@
     };
   };
 
-  # Every file under ./modules is a flake-parts module, imported automatically.
-  # Aspects live in modules/*.nix, hosts compose them in modules/hosts/*.nix.
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }

@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   flake.modules.darwin.core =
     { lib, pkgs, ... }:
@@ -47,7 +48,7 @@
         nerd-fonts.jetbrains-mono
       ];
 
-      time.timeZone = "America/Sao_Paulo";
+      time.timeZone = config.flake.timeZone;
     };
 
   flake.modules.darwin.homebrew =

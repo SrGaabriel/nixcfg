@@ -1,6 +1,6 @@
 {
   flake.modules.nixos.desktop =
-    { pkgs, ... }:
+    { pkgs, inputs, ... }:
     {
       services.xserver.xkb = {
         layout = "us";
@@ -10,6 +10,7 @@
       console.keyMap = "us-acentos";
 
       programs.niri.enable = true;
+      programs.niri.package = pkgs.niri;
 
       environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
@@ -60,6 +61,8 @@
           noto-fonts-color-emoji
           liberation_ttf
           nerd-fonts.jetbrains-mono
+          inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-pro
+          inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-mono
         ];
         fontconfig = {
           antialias = true;
@@ -80,9 +83,7 @@
     {
       programs.dsearch = {
         enable = true;
-        package = inputs.dsearch.packages.${pkgs.stdenv.hostPlatform.system}.dsearch.overrideAttrs {
-          vendorHash = "sha256-Gq3tVwe39m5KGfkI3DEnQEQEGs/cLDCiwx6XFM61f6c=";
-        };
+        package = inputs.dsearch.packages.${pkgs.stdenv.hostPlatform.system}.dsearch;
       };
 
       programs.niri.config = builtins.readFile ../niri-config.kdl;
@@ -97,6 +98,7 @@
       };
 
       home.pointerCursor = {
+        enable = true;
         name = "breeze_cursors";
         package = pkgs.kdePackages.breeze;
         size = 18;

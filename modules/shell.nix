@@ -25,7 +25,22 @@
           def cnew [name: string] {
             cargo new $"crates/($name)" --name $"(($env.PWD | path basename))-($name)" --lib
           }
+
+          def --wrapped claude [model: string, ...rest] {
+            npx @anthropic-ai/claude-code@latest --model $model --dangerously-skip-permissions ...$rest
+          }
         '';
+      };
+
+      programs.ssh = {
+        enable = true;
+        enableDefaultConfig = false;
+        matchBlocks."server.purduehackers.com" = {
+          hostname = "server.purduehackers.com";
+          user = "gabriel";
+          port = 10022;
+          setEnv.TERM = "xterm-256color";
+        };
       };
 
       programs.zoxide = {

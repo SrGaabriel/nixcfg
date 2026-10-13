@@ -4,8 +4,6 @@ let
   hm = config.flake.modules.homeManager;
 in
 {
-  # These labels match the X1E project's installation instructions. Create
-  # them during installation, or replace them with the labels/UUIDs you use.
   flake.modules.nixos.hw-yoga-slim-7x =
     { ... }:
     {
@@ -31,7 +29,6 @@ in
         hm.linux
         hm.desktop
         hm.dms
-        hm.noctalia
       ];
     };
 
@@ -50,7 +47,6 @@ in
         emergencyAccess = true;
       };
 
-      # x1e-nixos-config's PR branch selects linuxPackages_latest by default.
       system.stateVersion = "25.11";
     };
 
