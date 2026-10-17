@@ -171,7 +171,6 @@ in
         onlyoffice-desktopeditors
         krita
         kdePackages.kdenlive
-        nbtExplorer
         stremio-linux-shell
         temurin-bin-21
         (prismlauncher.override {
@@ -180,15 +179,12 @@ in
             temurin-bin-21
           ];
         })
-        signal-desktop
         amdgpu_top
         kdePackages.plasma-systemmonitor
         thunderbird
         jetbrains.idea
-        jetbrains.rust-rover
         helium.packages.${pkgs.stdenv.hostPlatform.system}.default
         inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight
-        inputs.plum.packages.${pkgs.stdenv.hostPlatform.system}.default
         (pkgs.haskell.lib.dontCheck (
           pkgs.haskellPackages.callCabal2nix "dhall-lsp-server"
             /home/gabriel/Developer/dhall-haskell/dhall-lsp-server

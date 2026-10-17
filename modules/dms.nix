@@ -41,7 +41,7 @@
               gothCornersEnabled = false;
               iconScale = 1;
               id = "default";
-              innerPadding = -5;
+              innerPadding = -1;
               island = false;
               islandCompactThickness = 30;
               islandFloating = false;
@@ -64,6 +64,10 @@
               position = 0;
               removeWidgetPadding = false;
               rightWidgets = [
+                {
+                  enabled = true;
+                  id = "systemMonitorPlus";
+                }
                 {
                   enabled = true;
                   id = "systemTray";
@@ -220,6 +224,35 @@
               src = "${dmsPlugins}/DankKDEConnect";
             };
             dankLauncherKeys.src = "${dmsPlugins}/DankLauncherKeys";
+            systemMonitorPlus = {
+              src = "${
+                pkgs.fetchFromGitHub {
+                  owner = "Dadangdut33";
+                  repo = "dms-plugins";
+                  rev = "63fe6b87c497f1f7c2ea61432716817db1c5c3a4";
+                  sha256 = "sha256-/iIqBej8dFwOQpvO9PXFvnDwZMSA7IykzaQjl5xoJUs=";
+                }
+              }/SystemMonitorPlus";
+              settings = {
+                resourceOrder = "cpuUsage,cpuTemp,gpuTemp,ramUsage";
+
+                cpuUsageEnabled = true;
+                cpuUsageVisualStyle = "gauge";
+                cpuUsageShowText = false;
+
+                cpuTempEnabled = true;
+                cpuTempVisualStyle = "gauge";
+                cpuTempShowText = false;
+
+                gpuTempEnabled = true;
+                gpuTempVisualStyle = "gauge";
+                gpuTempShowText = false;
+
+                ramUsageEnabled = true;
+                ramUsageVisualStyle = "gauge";
+                ramUsageShowText = false;
+              };
+            };
             brSoccer = {
               enable = false;
               src = pkgs.fetchFromGitHub {

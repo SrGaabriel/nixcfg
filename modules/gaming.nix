@@ -4,14 +4,16 @@
     {
       programs.steam = {
         enable = true;
-        extraCompatPackages = [ pkgs.proton-ge-bin ];
+        extraCompatPackages = [
+          pkgs.proton-ge-bin
+          pkgs.dwproton-bin
+        ];
         gamescopeSession.enable = true;
       };
       programs.gamescope.enable = true;
       programs.gamemode.enable = true;
       hardware.graphics.enable32Bit = true;
-
-      
+      boot.kernelModules = [ "ntsync" ];
 
       systemd.services.amdgpu-high-clocks = {
         description = "Force AMD GPU to high performance level";

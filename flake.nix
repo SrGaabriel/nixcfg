@@ -51,11 +51,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    plum = {
-      url = "git+file:///home/gabriel/Developer/plum?rev=092c29fb1193993587a1b86d6ba1cbcc6e867ec3";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     bend = {
       url = "github:bendlang/bend";
       inputs.nixpkgs.follows = "nixpkgs";

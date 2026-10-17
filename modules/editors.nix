@@ -196,6 +196,13 @@
             catppuccin = true;
             nix = true;
           };
+          languages.Haskell.formatter.external = {
+            command = "fourmolu";
+            arguments = [
+              "--stdin-input-file"
+              "{buffer_path}"
+            ];
+          };
           format_on_save = "on";
           vim_mode = false;
           load_direnv = "direct";
