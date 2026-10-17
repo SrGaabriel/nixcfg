@@ -38,11 +38,11 @@
       programs.ssh = {
         enable = true;
         enableDefaultConfig = false;
-        matchBlocks."server.purduehackers.com" = {
-          hostname = "server.purduehackers.com";
-          user = "gabriel";
-          port = 10022;
-          setEnv.TERM = "xterm-256color";
+        settings."server.purduehackers.com" = {
+          HostName = "server.purduehackers.com";
+          User = "gabriel";
+          Port = 10022;
+          SetEnv.TERM = "xterm-256color";
         };
       };
 

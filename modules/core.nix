@@ -133,28 +133,10 @@ top@{ inputs, ... }:
       };
 
       home.packages = with pkgs; [
-        rustup
         python3
-        deno
-        nodejs
-        uv
-        inputs.bend.packages.${pkgs.stdenv.hostPlatform.system}.default
-        ghc
-        cabal-install
-        ocaml
-        dune_3
-        ocamlPackages.utop
-        elan
-        zig
-        koka
-        sea-orm-cli
         nil
         nixd
         nixfmt
-        zls
-        haskell-language-server
-        ocamlPackages.ocaml-lsp
-        ocamlPackages.ocamlformat
         taplo
         typeshare
         typos
@@ -179,7 +161,6 @@ top@{ inputs, ... }:
         aria2
         ngrok
         gh
-        protobuf
       ];
 
       nixpkgs.config.allowUnfree = true;
