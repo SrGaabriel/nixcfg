@@ -162,6 +162,7 @@ top@{ inputs, ... }:
         aria2
         ngrok
         gh
+        inputs.lexeme.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 
       nixpkgs.config.allowUnfree = true;

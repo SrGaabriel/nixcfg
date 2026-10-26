@@ -82,6 +82,7 @@
           "omniwm"
           "microsoft-office"
           "jetbrains-toolbox"
+          "obs"
         ];
 
         masApps = {
@@ -100,6 +101,7 @@
         omniwm = "OmniWM";
         ticktick = "TickTick";
         linearmouse = "LinearMouse";
+        raycast = "Raycast";
       };
 
       omniwmDefaults = builtins.fromTOML (builtins.readFile ./omniwm-defaults.toml);
@@ -204,7 +206,7 @@
           ProgramArguments = [
             "/usr/bin/open"
             "-a"
-            "/Applications/${app}.app"
+            app
           ];
           RunAtLoad = true;
         };
