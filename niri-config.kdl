@@ -1,5 +1,8 @@
 input {
     keyboard {
+        repeat-delay 250
+        repeat-rate 30
+
         xkb {
             layout "us"
             variant "intl"

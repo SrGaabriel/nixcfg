@@ -42,7 +42,6 @@
       };
 
       environment.systemPackages = [
-        pkgs.gpu-screen-recorder
         ((pkgs.sddm-astronaut.override { embeddedTheme = "pixel_sakura"; }).overrideAttrs (old: {
           postInstall = (old.postInstall or "") + ''
             substituteInPlace $out/share/sddm/themes/sddm-astronaut-theme/Components/Input.qml \

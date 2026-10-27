@@ -136,6 +136,7 @@ top@{ inputs, ... }:
         python3
         nil
         nixd
+        nodejs
         nixfmt
         taplo
         typeshare
