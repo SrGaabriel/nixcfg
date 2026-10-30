@@ -87,6 +87,7 @@
 
         masApps = {
           Xcode = 497799835;
+          "uBlock Origin Lite" = 6745342698;
         };
       };
     };

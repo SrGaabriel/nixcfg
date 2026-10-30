@@ -162,6 +162,7 @@ top@{ inputs, ... }:
         aria2
         ngrok
         gh
+        ffmpeg
         inputs.lexeme.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 
